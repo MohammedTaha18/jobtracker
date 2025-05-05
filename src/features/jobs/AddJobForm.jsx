@@ -1,6 +1,7 @@
 import { useSelector ,useDispatch } from "react-redux";
 import { postJob,clearForm,setFormField,formValues} from "./jobsSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 const AddJobForm = () => {
@@ -13,12 +14,15 @@ const AddJobForm = () => {
   const handleChange = (field) => (e) => {
     dispatch(setFormField({field,value:e.target.value}))
   }
+  const notify = () => {
+    toast.success("Job Added Successfully!",{autoClose:1000});  
+  };
 
   const savePost = (e) => {
     e.preventDefault()
     dispatch(postJob())
     dispatch(clearForm())
-    alert('Job added')
+    notify()
     navigate('/alljobs')
   }
 

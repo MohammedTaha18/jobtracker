@@ -1,10 +1,10 @@
-// src/components/Sidebar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { logout } from '../features/auth/authSlice';
-import { islogged } from '../features/auth/authSlice';
+import { asyncLogout } from '../features/auth/authSlice';
+import { islogged ,error} from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { Offcanvas } from 'bootstrap';
 
 const Sidebar = () => {
 
@@ -13,7 +13,10 @@ const Sidebar = () => {
 
   const handleLogout = (e) => {
     e.preventDefault()
-    dispatch(logout())
+    dispatch(asyncLogout())
+    const sidebarElement = document.getElementById('sidebar');
+    const bsOffcanvas = Offcanvas.getInstance(sidebarElement) || new bootstrap.Offcanvas(sidebarElement);
+    bsOffcanvas.hide();
   } 
 
   return (

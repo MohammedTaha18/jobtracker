@@ -1,23 +1,22 @@
-import { islogged } from "../features/auth/authSlice"
-import { useSelector } from "react-redux"
-import { Outlet } from "react-router-dom"
-import { Navigate } from "react-router-dom"
-import { useLocation } from "react-router-dom"
+import { useSelector } from "react-redux";
+import { Outlet, Navigate, useLocation } from "react-router-dom";
+import { islogged, Loading } from "../features/auth/authSlice";
+import { Audio } from 'react-loader-spinner';
 
 const ProtectedRoutes = () => {
+  const isLoggedIn = useSelector(islogged);
+  const isLoading = useSelector(Loading);
+  const location = useLocation();
 
-    const isLoggedIn = useSelector(islogged)
-    const location = useLocation()
-
+  if (isLoading) {
     return (
-        <div>
-            {
-                isLoggedIn
-                        ? <Outlet/>
-                        : <Navigate to="/login" replace state={{from:location}}/> 
-                    }           
-        </div>
-    )
-}
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <Audio height="80" width="80" radius="9" color="black" ariaLabel="loading" />
+      </div>
+    );
+  }
 
-export default ProtectedRoutes
+  return isLoggedIn ? <Outlet /> : <Navigate to="/login" replace state={{ from: location }} />;
+};
+
+export default ProtectedRoutes;

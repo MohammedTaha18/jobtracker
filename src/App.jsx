@@ -6,6 +6,7 @@ import JobsList from './features/jobs/Alljobs'
 import EditJobForm from './features/jobs/EditJobForm'
 import Login from './features/auth/Login'
 import ProtectedRoutes from './utils/ProtectedRoutes'
+import Stats from './features/jobs/Stats'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
         <Route path = 'alljobs' element={<JobsList/>} />
         <Route path ='addjob' element={<AddJobForm/>} />
         <Route path='editJob/:id' element={<EditJobForm/>} />
+        <Route path="stats" element={<Stats/>} />
         </Route>
         <Route path='login' element={<Login/>}/>
         <Route path="*" element={<Navigate to="/login" />} />

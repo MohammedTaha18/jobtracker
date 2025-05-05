@@ -1,26 +1,62 @@
-import { userData, login, changeValues } from "./authSlice";
+import { userData,changeValues,islogged,Loading} from "./authSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { asyncLogin } from "./authSlice";
+import { useEffect } from "react";
+import { Audio } from 'react-loader-spinner';
+import { toast } from "react-toastify";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLoading = useSelector(Loading)
   const {state} = useLocation()
-  const { name, email } = useSelector(userData);
-
+  const isLoggedIn = useSelector(islogged)
+  const {email,name} = useSelector(userData)
   const handleChange = (field) => (e) => {
     dispatch(changeValues({ field, value: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(login({ name, email }));
-    navigate(state?.from || '/',{replace:true});
+    if (!name || !email) {
+      alert('Please fill in all fields');
+      return;
+    }
+    try {
+      await dispatch(asyncLogin({ email, name })).unwrap();
+      navigate(state?.from?.pathname || '/', { replace: true });
+    } catch (err) {
+      toast.error(`${err}: try logging again`, { autoClose: 1000 });
+    }
   };
+  
 
-  return (
+
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      toast.success("Logged in successfully!", { autoClose: 1000 });
+      navigate(state?.from?.pathname || '/', { replace: true });
+    }
+  }, [isLoggedIn, navigate, state]);
+
+  
+  if(isLoading){
+    return ( <div className="d-flex justify-content-center align-items-center vh-100">
+         <Audio
+           height="80"
+           width="80"
+           radius="9"
+           color="black"
+           ariaLabel="loading"
+         />
+       </div>)
+   }
+
+  return(
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6 col-lg-4">

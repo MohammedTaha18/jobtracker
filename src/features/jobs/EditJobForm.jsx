@@ -6,6 +6,7 @@ import { allJobs,clearForm } from './jobsSlice'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { toast } from "react-toastify";
 
 const EditJobForm = () => {
 
@@ -23,7 +24,7 @@ const EditJobForm = () => {
       useEffect(()=>{
         if(job && !isInitialized){
             Object.entries(job).forEach(([field,value])=>{
-                dispatch(setFormField(field,value))
+                dispatch(setFormField({field,value}))
             })
             setisInitialized(true)
         }
@@ -34,7 +35,7 @@ const EditJobForm = () => {
         try{
         dispatch(updateJob({id}))
         dispatch(clearForm())
-        alert('Job Updated')
+        toast.success("Job Edited Successfully!",{autoClose:1000})
         navigate('/alljobs')
         }catch(err){
             console.log(err)
