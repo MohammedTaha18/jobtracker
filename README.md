@@ -1,12 +1,51 @@
-# React + Vite
+# Job Tracker App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+A simple Job Tracker application built with **React** and **Redux Toolkit** for managing job applications. This app allows users to add, edit, and delete job applications, filter jobs by status, type, and sort them by date. The application uses Redux for state management, including features like pagination, search debouncing, and mock authentication.
 
-Currently, two official plugins are available:
+## Features
+- **Job Management:**
+  - Add, edit, and delete job applications.
+  - Filter jobs by status, job type, and sorting.
+  - Pagination and search functionality.
+  
+- **Mock Authentication:**
+  - Protected routes with mock authentication.
+  - User state persisted in `localStorage`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **UX Enhancements:**
+  - Search input debounced to prevent rapid dispatching of actions.
+  - LocalStorage integration for persisting state across sessions.
+  - Toast notifications for delete,success.
 
-## Expanding the ESLint configuration
+## Technologies Used
+- **React**
+- **Redux Toolkit**
+- **React Router DOM**
+- **Bootstrap** (or any CSS framework)
+- **LocalStorage** for persistence
+- **React-Toastify** for notifications
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Installation
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/MohammedTaha18/jobtracker.git
+    ```
+2. Install dependencies:
+    ```bash
+    npm install
+    ```
+3. Run the app:
+    ```bash
+    npm start
+    ```
+
+## Usage
+- Navigate through the dashboard to view, add, edit, and delete job applications.
+- Use filters to narrow down the job list by status, type, and sorting.
+- Search for jobs by position or company.
+- Check the "Stats" page for insights into the job applications.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+

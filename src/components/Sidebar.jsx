@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { asyncLogout } from '../features/auth/authSlice';
-import { islogged ,error} from '../features/auth/authSlice';
+import { islogged} from '../features/auth/authSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { Offcanvas } from 'bootstrap';
@@ -46,7 +46,7 @@ const Sidebar = () => {
             </li>
             ):(
               <li className="nav-item">
-              <Link className="nav-link" to="/login">Login</Link>
+              <button><Link className="nav-link" to="/login">Login</Link></button>
               </li>
             )
           }

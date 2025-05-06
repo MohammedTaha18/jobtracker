@@ -1,10 +1,10 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, } from 'react-redux';
+import { useState,useEffect } from 'react';
 import { filters, page, setfilters, setPage } from './filteredSlice';
 import { allJobs, deleteJob } from './jobsSlice';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
-import { islogged } from '../auth/authSlice';
 
 const Alljobs = () => {
   const dispatch = useDispatch();
@@ -13,6 +13,7 @@ const Alljobs = () => {
   const Page = useSelector(page);
   const { status, jobType, sort, search } = useSelector(filters);
   const limit = 5;
+  const [searchInput, setSearchInput] = useState(search);
 
   const filteredJobs = useMemo(() => {
     let result = [...jobs];
@@ -47,6 +48,17 @@ const Alljobs = () => {
     dispatch(setfilters({ field, value: e.target.value }));
   };
 
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      if (searchInput !== search) {
+        if (Page !== 1) dispatch(setPage({ page: 1 }));
+        dispatch(setfilters({ field: 'search', value: searchInput }));
+      }
+    }, 500);
+  
+    return () => clearTimeout(delayDebounce); // This is important to cancel the previous timeout if searchInput changes quickly
+  }, [searchInput]);
+  
   const handlePage = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
       dispatch(setPage({ page: newPage }));
@@ -57,7 +69,7 @@ const Alljobs = () => {
     if (confirm('Do you want to delete this job?')) {
       dispatch(deleteJob({ id }));
       navigate('/alljobs');
-      toast.info("Job Deleted Successfully!",{autoClose:1000}); 
+      toast.info("Job Deleted Successfully!", { autoClose: 1000 });
     }
   };
 
@@ -100,15 +112,15 @@ const Alljobs = () => {
             <input
               type="text"
               className="form-control"
-              value={search}
-              onChange={handlefilter('search')}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
               placeholder="Position or Company"
             />
           </div>
         </div>
       </div>
 
-      {/* Job List */}
+
       <div className="row">
         {paginatedJobs.length === 0 ? (
           <p className="text-muted text-center">No jobs found.</p>
@@ -135,24 +147,28 @@ const Alljobs = () => {
         )}
       </div>
 
-      {/* Pagination */}
-      <div className="d-flex justify-content-center align-items-center mt-4">
-        <button
-          className="btn btn-outline-secondary me-2"
-          onClick={() => handlePage(Page - 1)}
-          disabled={Page === 1}
-        >
-          Prev
-        </button>
-        <span className="fw-medium">Page {Page} of {totalPages}</span>
-        <button
-          className="btn btn-outline-secondary ms-2"
-          onClick={() => handlePage(Page + 1)}
-          disabled={Page >= totalPages}
-        >
-          Next
-        </button>
-      </div>
+      {paginatedJobs.length !== 0 ? (
+        <div className="d-flex justify-content-center align-items-center mt-4">
+          <button
+            className="btn btn-outline-secondary me-2"
+            onClick={() => handlePage(Page - 1)}
+            disabled={Page === 1}
+          >
+            Prev
+          </button>
+          <span className="fw-medium">Page {Page} of {totalPages}</span>
+          <button
+            className="btn btn-outline-secondary ms-2"
+            onClick={() => handlePage(Page + 1)}
+            disabled={Page >= totalPages}
+          >
+            Next
+          </button>
+        </div>
+      ) : (
+        null
+      )
+      }
     </div>
   );
 };

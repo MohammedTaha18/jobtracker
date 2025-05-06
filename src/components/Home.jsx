@@ -1,6 +1,4 @@
 import React from 'react'
-import Navbar from './Navbar'
-import Sidebar from './Sidebar'
 import { useSelector } from 'react-redux'
 import { Loading, error } from '../features/auth/authSlice'
 import { Audio } from 'react-loader-spinner'
@@ -30,8 +28,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
-      <Sidebar />
+      <h1>Welcome to Job Tracking Application</h1>
     </>
   )
 }

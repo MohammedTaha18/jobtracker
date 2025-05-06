@@ -2,6 +2,7 @@ import { allJobs, jobTypes, jobStatus, changeChartType, chartType } from "./jobs
 import { useSelector, useDispatch } from "react-redux"
 import React from "react";
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis } from "recharts";
+import { Tooltip } from 'recharts';
 
 const Stats = () => {
     const dispatch = useDispatch()
@@ -51,6 +52,7 @@ const Stats = () => {
           id="analysis"
           className="form-select w-50 mx-auto"
           onChange={handleChange}
+          value={chart}
         >
           <option value="perStatus">Jobs Per Status</option>
           <option value="perType">Jobs Per Type</option>
@@ -59,7 +61,9 @@ const Stats = () => {
       </div>
       </div>
       </div>
-            {chart === 'perStatus' ? (
+            {
+            jobs.length === 0?<p className="text-center">No Data to Display</p>
+            :chart === 'perStatus' ? (
                 <div className="container mt-5">
                 <div className="row justify-content-center">
                   <div className="col-md-8">
@@ -69,6 +73,7 @@ const Stats = () => {
                       </div>
                       <div className="card-body">
                         <BarChart width={600} height={450} data={jobStatusCounts}>
+                          <Tooltip/>
                           <CartesianGrid stroke="#e0e0e0" strokeDasharray="3 3" />
                           <XAxis
                             dataKey="status"
@@ -107,6 +112,7 @@ const Stats = () => {
                                 </div>
                                 <div className="card-body">
                                     <BarChart width={600} height={450} data={jobTypeCounts}>
+                                      <Tooltip/>
                                         <CartesianGrid stroke="#e0e0e0" strokeDasharray="3 3" />
                                         <XAxis
                                             dataKey="name"

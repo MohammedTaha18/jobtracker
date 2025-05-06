@@ -14,7 +14,7 @@ const initialState = {
     },
     jobTypes:["fulltime","parttime","remote","internship"],
     jobStatus:["pending","interview","declined"],
-    charType:'perStatus'
+    chartType:'perStatus'
 }
 const jobsSlice = createSlice({
     name: 'jobs',
@@ -54,7 +54,7 @@ const jobsSlice = createSlice({
         },
         changeChartType:(state,action) => {
             const {value} = action.payload 
-            state.charType = value
+            state.chartType = value
         }
     }
 })
@@ -62,7 +62,7 @@ export const allJobs = (state) => state.jobs.jobs
 export const formValues = (state) => state.jobs.form
 export const jobTypes = (state) => state.jobs.jobTypes
 export const jobStatus = (state) =>state.jobs.jobStatus
-export const chartType = (state) => state.jobs.charType
+export const chartType = (state) => state.jobs.chartType
 
 export const { postJob, clearForm, setFormField, updateJob,deleteJob,changeChartType} = jobsSlice.actions
 export default jobsSlice.reducer

@@ -25,12 +25,12 @@ export const MockAPI = async ({ email, name }) => {
 
 export const asyncLogin = createAsyncThunk(
     'auth/asyncLogin',
-    async ({ email, name }, { rejectWithError }) => {
+    async ({ email, name }, { rejectWithValue }) => {
         try {
             const user = await MockAPI({ email, name })
             return user
         } catch (err) {
-            return rejectWithError(err.message)
+            return rejectWithValue(err.message)
         }
     }
 )
